@@ -2,8 +2,8 @@
   <q-page class="flex flex-center">
     <img
       alt="Quasar logo"
-      src="~assets/sabor-peru.jpg"
-      style="width:80%; height:80%"
+      src="~assets/cafeitalia.png"
+      style="width:20%; height:20%"
     >
   </q-page>
 </template>
