@@ -15,7 +15,7 @@
           {{$store.state.user.name}}
         </q-toolbar-title>
 
-        <div>Cafe italia &nbsp;&nbsp;</div><br>
+        <div>CAFE ITALIA &nbsp;&nbsp;</div><br>
         <q-btn @click="logout" v-if="$store.getters.isLoggedIn" label="salir" color="red" />
       </q-toolbar>
     </q-header>
