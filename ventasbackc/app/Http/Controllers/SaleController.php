@@ -270,8 +270,7 @@ class SaleController extends Controller
             hr{border: 1px dashed ;}</style>
             <div class="textoimp margen">
             <span style="font-size:medium">'.$sale->dosage->empresa->nombre.'</span><br>
-            <span style="font-size: x-small">BISTROFOOD S.R.L.</span><br>
-            <span>SUCURSAL No 1</span><br>
+            <span>SUCURSAL No 2</span><br>
             <span>'.$sale->dosage->empresa->direccion.'</span><br>
             <span>Tel: '.$sale->dosage->empresa->telefono.'</span><br>
             <span>ORURO - BOLIVIA</span><br>

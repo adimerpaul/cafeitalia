@@ -14,17 +14,6 @@ class RubroSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('rubros')->insert([
-            [
-                "nombre"=>'PLATOS',
-                "imagen"=>'comida.png',
-                "color"=>'red'
-            ],
-            [
-                "nombre"=>'BEBIDAS',
-                "imagen"=>'bebida.png',
-                "color"=>'blue'
-            ],
-        ]);
+
     }
 }
