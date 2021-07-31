@@ -166,7 +166,7 @@
           </q-item-section>
 
           <q-item-section>
-            <q-item-label>Venta Sabor Peru</q-item-label>
+            <q-item-label>Venta Cafe Italia</q-item-label>
             <q-item-label caption>
               Ventas sabor peru
             </q-item-label>
