@@ -50,6 +50,8 @@
               filled
               v-model="dato.color"
               class="my-input"
+              lazy-rules
+              :rules="[ val => val && val.length > 0 || 'Por favor ingresa datos']"
             >
               <template v-slot:append>
                 <q-icon name="colorize" class="cursor-pointer">
@@ -66,6 +68,9 @@
               :factory="uploadFile"
               max-files="1"
               accept=".jpg,.png, image/*"
+              v-model="dato.imagen"
+              lazy-rules
+              :rules="[ val => val && val.length > 0 || 'Por favor ingresa datos']"
             />
 
 <!--            <q-toggle v-model="accept" label="I accept the license and terms" />-->
@@ -191,6 +196,8 @@
               filled
               v-model="dato2.color"
               class="my-input"
+              lazy-rules
+              :rules="[ val => val && val.length > 0 || 'Por favor ingresa datos']"
             >
               <template v-slot:append>
                 <q-icon name="colorize" class="cursor-pointer">
@@ -556,6 +563,7 @@ export default {
     editImg(producto){
       // console.log(producto.row);
       this.dato2= producto.row;
+      this.dato2.imagen='';
       this.dialog_img=true;
     },
     deleteRow(producto){
@@ -582,6 +590,10 @@ export default {
         this.dialog_ver=true;
     },
     onSubmit () {
+            if(this.dato.imagen==null || this.dato.imagen=='')
+        alert('Ingresar la imagen');
+      else{ 
+
       this.$q.loading.show();
 
       this.$axios.post(process.env.URL+'/product', this.dato).then(res=>{
@@ -593,11 +605,14 @@ export default {
         });
         this.alert=false;
         this.misdatos();
-      })
+      })}
 
 
     },
     onMod(){
+        if(this.dato2.imagen==null || this.dato2.imagen=='')
+          alert('seleccionar imagen');
+        else{
         this.$q.loading.show();
         this.$axios.put(process.env.URL+'/product/'+this.dato2.id,this.dato2).then(res=>{
          this.$q.notify({
@@ -608,7 +623,7 @@ export default {
         });
         this.dialog_mod=false;
           this.dialog_img=false;
-        this.misdatos();})
+        this.misdatos();})}
     },
     onDel(){
         this.$q.loading.show();
