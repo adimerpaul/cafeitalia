@@ -84,7 +84,11 @@
               <td>{{i.nombre}}</td>
               <td>{{i.cantidad}}</td>
               <td>{{i.subtotal}}</td>
-              <td><q-btn @click="quitar(index)" size="xs" icon="delete" color="negative"></q-btn></td>
+              <td>
+              <q-btn @click="agregar(index)" size="xs" icon="add" color="green"></q-btn>
+              <q-btn @click="disminuir(index)" size="xs" icon="remove" color="warning"></q-btn>
+              <q-btn @click="quitar(index)" size="xs" icon="delete" color="negative"></q-btn>
+              </td>
             </tr>
             </tbody>
             <tfoot>
@@ -264,6 +268,18 @@ export default {
     },
     quitar(index){
       this.$store.state.products.splice(index,1);
+    },
+    agregar(index){
+      let product=this.$store.state.products[index];
+      this.$store.state.products[index].cantidad++;
+      this.$store.state.products[index].subtotal= (parseFloat(product.precio)* parseFloat(this.$store.state.products[index].cantidad)).toFixed(2);
+    },
+    disminuir(index){
+      let product=this.$store.state.products[index];
+      this.$store.state.products[index].cantidad--;
+      this.$store.state.products[index].subtotal= (parseFloat(product.precio)* parseFloat(this.$store.state.products[index].cantidad)).toFixed(2);
+      if( this.$store.state.products[index].cantidad==0)
+        this.$store.state.products.splice(index,1);
     },
     miventa(product){
       // dat.user.usuariopermisos.find( permiso => permiso.permiso_id === 1)
