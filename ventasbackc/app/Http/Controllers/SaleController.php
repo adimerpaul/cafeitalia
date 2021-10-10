@@ -163,6 +163,34 @@ class SaleController extends Controller
             $sale->save();
 //            return $sale;
         }
+
+        $conn = mysqli_connect("165.227.143.191", "myuser", "mypass", "tarjetaplaza");
+// Check connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+        $result = $conn->query("SELECT * from cliente where codigo='".$request->codigo."'");
+        if ($result->num_rows > 0) {
+
+            while($row = $result->fetch_assoc()) {
+//                echo $row["nombre"];
+//                return json_encode($row);
+                $conn->query("UPDATE cliente SET saldo=saldo-".$request->total." where codigo='".$request->codigo."'");
+                $conn->query("INSERT INTO historial SET
+                fecha='".date("Y-m-d")."',
+                lugar='CAFE ITALIA',
+                monto='".$request->total."',
+                numero='".$sale->id."',
+                cliente_id='".$row["id"]."'
+                ");
+            }
+            // output data of each row
+
+        } else {
+//            echo "0";
+        }
+        $conn->close();
+
 //        return $request->delivery;
         foreach ($request->details as $row){
 //            echo $row['product_id'].'<br>';
@@ -347,9 +375,25 @@ class SaleController extends Controller
      * @param  \App\Models\Sale  $sale
      * @return \Illuminate\Http\Response
      */
-    public function show(Sale $sale)
+    public function show($codigo)
     {
-        //
+        //        return "a";
+        $conn = mysqli_connect("165.227.143.191", "myuser", "mypass", "tarjetaplaza");
+// Check connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+        $result = $conn->query("SELECT * from cliente where codigo='$codigo'");
+        if ($result->num_rows > 0) {
+            // output data of each row
+            while($row = $result->fetch_assoc()) {
+//                echo $row["nombre"];
+                return json_encode($row);
+            }
+        } else {
+            echo "0";
+        }
+        $conn->close();
     }
 
     /**
