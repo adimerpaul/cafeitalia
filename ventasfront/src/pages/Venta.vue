@@ -114,7 +114,7 @@
               <div class="row">
                 <div class="col-12">
                   <q-form
-                    @submit="onsubmit"
+                    @submit.prevent="onsubmit"
                     class="q-gutter-md"
                   >
                     <div class="row">
