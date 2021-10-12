@@ -121,6 +121,14 @@
           <q-td key="rubro" :props="props">
             <div class="text-h6">{{ props.row.rubro.nombre }}</div>
           </q-td>
+          <q-td key="activo" :props="props">
+            <q-badge color="green" v-if="props.row.activo==1" @click="camestado(props.row)">
+                    ACTIVO
+                  </q-badge>
+                  <q-badge color="red" v-else @click="camestado(props.row)">
+                    INACTIVO
+                  </q-badge>
+          </q-td>
           <q-td key="opcion" :props="props">
             <q-btn v-if="$store.state.modificarproducto" dense round flat color="green" @click="addRow(props)" icon="add"></q-btn>
             <q-btn v-if="$store.state.modificarproducto" dense round flat color="red" @click="substractRow(props)" icon="remove"></q-btn>
@@ -433,6 +441,7 @@ export default {
         { name: 'cantidad', align: 'right', label: 'Stock', field: 'cantidad', sortable: true },
         { name: 'precio', align: 'right', label: 'Precio', field: 'precio', sortable: true },
         { name: 'rubro', align: 'center', label: 'Rubro', field: 'rubro', sortable: true },
+        { name: 'activo', align: 'center', label: 'Activo', field: 'activo' },
         { name: 'opcion', label: 'Opcion', field:'action',  sortable: false },
 
       ],
@@ -462,6 +471,12 @@ export default {
     this.misrubros();
   },
   methods:{
+    camestado(prod){
+      this.$axios.post(process.env.URL+'/activarprod',prod).then(res=>{
+          this.misdatos();
+      });
+
+    },
     uploadFile(files) {
       this.file_path = files[0]
       const fileData = new FormData()

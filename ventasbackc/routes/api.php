@@ -44,6 +44,7 @@ Route::post('/login',[\App\Http\Controllers\UserController::class,'login']);
     Route::post('/productadd',[\App\Http\Controllers\ProductController ::class,'productadd']);
     Route::post('/productsub',[\App\Http\Controllers\ProductController ::class,'productsub']);
     Route::post('/resproducto',[\App\Http\Controllers\SaleController ::class,'resproducto']);
+    Route::post('/activarprod',[\App\Http\Controllers\ProductController ::class,'activarprod']);
     Route::post('/imprimirresumen',[\App\Http\Controllers\SaleController ::class,'imprimirresumen']);
     Route::post('/imprimirresumenrec',[\App\Http\Controllers\SaleController ::class,'imprimirresumenrec']);
     Route::post('/imprimirresumenfac',[\App\Http\Controllers\SaleController ::class,'imprimirresumenfac']);
