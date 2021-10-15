@@ -163,19 +163,19 @@ class SaleController extends Controller
             $sale->save();
 //            return $sale;
         }
-
+        $ctarjeta=$this->hexToStr($request->codigo);
         $conn = mysqli_connect("165.227.143.191", "myuser", "mypass", "tarjetaplaza");
 // Check connection
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
-        $result = $conn->query("SELECT * from cliente where codigo='".$request->codigo."'");
+        $result = $conn->query("SELECT * from cliente where codigo='".$ctarjeta."'");
         if ($result->num_rows > 0) {
 
             while($row = $result->fetch_assoc()) {
 //                echo $row["nombre"];
 //                return json_encode($row);
-                $conn->query("UPDATE cliente SET saldo=saldo-".$request->total." where codigo='".$request->codigo."'");
+                $conn->query("UPDATE cliente SET saldo=saldo-".$request->total." where codigo='".$ctarjeta."'");
                 $conn->query("INSERT INTO historial SET
                 fecha='".date("Y-m-d")."',
                 lugar='CAFE ITALIA',
@@ -378,6 +378,8 @@ class SaleController extends Controller
     public function show($codigo)
     {
         //        return "a";
+        $codigo=$this->hexToStr($codigo);
+        //return $codigo;
         $conn = mysqli_connect("165.227.143.191", "myuser", "mypass", "tarjetaplaza");
 // Check connection
         if ($conn->connect_error) {
@@ -394,6 +396,13 @@ class SaleController extends Controller
             echo "0";
         }
         $conn->close();
+    }
+    public function hexToStr($hex){
+        $string='';
+        for ($i=0; $i < strlen($hex)-1; $i+=2){
+            $string .= chr(hexdec($hex[$i].$hex[$i+1]));
+        }
+        return $string;
     }
 
     /**
