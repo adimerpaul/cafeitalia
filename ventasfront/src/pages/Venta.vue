@@ -187,10 +187,10 @@
                       <q-btn label="Cerrar" type="button" size="md" icon="delete" color="negative" class="q-ml-sm" @click="icon=false" />
                     </div>
                   </q-form>
-                  <div class="col-2736a73"><q-checkbox @input="verificar" v-model="booltargeta"  label="Targeta"/></div>
+                  <div class="col-2"><q-checkbox @input="verificar" v-model="booltargeta"  label="Targeta"/></div>
                       <template v-if="booltargeta">
                         <div class="row">
-                        <div class="col-4"><q-input label="Codigo" v-model="codigo"  @change="consultartargeta"/></div>
+                        <div class="col-4"><q-input label="Codigo" v-model="codigo"  @keyup="consultartargeta"/></div>
                         <!--                    <div class="col-2 flex flex-center"><q-btn  icon="refresh" color="teal" size="xs" @click="consultartargeta" label="consultar"/></div>-->
                         <div class="col-4"><q-banner >Saldo :{{nombresaldo.saldo}} -- {{nombresaldo.nombre}}</q-banner></div>
                         <!--                      <div class="col-2 flex flex-center"><q-btn  icon="code" color="accent" size="xs" @click="rebaja" label="Dar rebaja"/></div>-->
