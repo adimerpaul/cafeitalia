@@ -439,6 +439,8 @@ export default {
         this.btn=false
         return false;
       }
+      let tj='';
+      if(this.tienerebaja) tj='S'; else tj='N';
       this.$axios.post(process.env.URL+'/sale',{
         total:this.total,
         monto:this.recibido,
@@ -447,7 +449,8 @@ export default {
         delivery:this.delivery,
         details:this.$store.state.products,
         fecha:this.fecha,
-        codigo:this.codigo
+        codigo:this.codigo,
+        tarjeta:tj
       }).then(res=>{
         this.booltargeta=false
         this.codigo=''
