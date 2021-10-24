@@ -167,7 +167,7 @@ class SaleController extends Controller
 //            return $sale;
         }
         $ctarjeta=$this->hexToStr($request->codigo);
-        $conn = mysqli_connect("165.227.143.191", "myuser", "mypass", "tarjetaplaza");
+        $conn = mysqli_connect("165.227.143.191", "myuser", "ORRKWKtehUul1p4z", "tarjetaplaza");
 // Check connection
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
@@ -384,7 +384,7 @@ class SaleController extends Controller
         //        return "a";
         $codigo=$this->hexToStr($codigo);
         //return $codigo;
-        $conn = mysqli_connect("165.227.143.191", "myuser", "mypass", "tarjetaplaza");
+        $conn = mysqli_connect("165.227.143.191", "myuser", "ORRKWKtehUul1p4z", "tarjetaplaza");
 // Check connection
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
@@ -690,7 +690,7 @@ class SaleController extends Controller
             $cadena.="<tr><td>$row->nombreproducto</td><td>$row->cant</td><td>$row->precio</td><td>$row->total</td></tr>";
             if($row->tarjeta=='SI')
                 $totaltarjeta=$totaltarjeta+$row->total;
-            else                
+            else
                 $total=$total+$row->total;
         }
         $cadena.="</tbody></table></center>";
