@@ -441,7 +441,7 @@ export default {
         return false;
       }
       let tj='';
-      if(this.tienerebaja) tj='S'; else tj='N';
+      if(this.tienerebaja) tj='SI'; else tj='NO';
       this.$axios.post(process.env.URL+'/sale',{
         total:this.total,
         monto:this.recibido,

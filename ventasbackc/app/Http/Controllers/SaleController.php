@@ -121,6 +121,7 @@ class SaleController extends Controller
             $codigo = New \CodigoControlV7();
             $codigocontrol=$codigo::generar($numero_autorizacion, $numero_factura, $nit_cliente, $fecha_compra, $monto_compra, $clave);
             $sale=new Sale();
+            $sale->tarjeta=$request->tarjeta;
             $sale->fecha=date('Y-m-d');
             $sale->total=$request->total;
             $sale->tipo=$tipo;
@@ -129,6 +130,7 @@ class SaleController extends Controller
             $sale->codigoqr=$codigoqr;
             $sale->delivery=$delivery;
             $sale->cobrar=$cobrar;
+
             $sale->nrocomprobante=$numero_factura;
             $sale->monto=$request->monto;
             $sale->user_id=$request->user()->id;
@@ -148,6 +150,7 @@ class SaleController extends Controller
 //            $codigocontrol=$codigo::generar($numero_autorizacion, $numero_factura, $nit_cliente, $fecha_compra, $monto_compra, $clave);
 //          return "RECIBO";
             $sale=new Sale();
+            $sale->tarjeta=$request->tarjeta;
             $sale->fecha=date('Y-m-d');
             $sale->total=$request->total;
             $sale->tipo=$tipo;
@@ -206,6 +209,7 @@ class SaleController extends Controller
             $detail->nombreproducto=$row['nombre'];
             $detail->precio=$row['precio'];
             $detail->subtotal=$row['subtotal'];
+            $detail->tarjeta=$request->tarjeta;
             $detail->save();
 //            return $detail;
         }
@@ -497,13 +501,13 @@ class SaleController extends Controller
         $empresa= Empresa::find(1);
         $usuario=User::find($id);
         $detalle=DB::table('details')
-        ->select('product_id','nombreproducto', DB::raw('SUM(cantidad) as cant'),'precio',DB::raw('SUM(subtotal) as total'))
+        ->select('product_id','nombreproducto','details.tarjeta', DB::raw('SUM(cantidad) as cant'),'precio',DB::raw('SUM(subtotal) as total'))
         ->join('sales','sales.id','=','details.sale_id')
         ->where('sales.user_id',$id)
         ->where('sales.fecha',$fecha)
         ->where('sales.estado','ACTIVO')
 
-        ->groupBy('product_id','nombreproducto','precio')
+        ->groupBy('product_id','nombreproducto','precio','details.tarjeta')
         ->get();
         $cadena="<style>
         .margen{padding: 0px 15px 0px 15px;}
@@ -534,19 +538,25 @@ class SaleController extends Controller
                 <th>DESCRIPCION</th> <th>CANTIDAD</th><th>P.U.</th><th>TOTAL</th></tr>
                 </thead><tbody>";
         $total=0;
+        $totaltarjeta=0;
 
         foreach ($detalle as $row){
 
             $cadena.="<tr><td>$row->nombreproducto</td><td>$row->cant</td><td>$row->precio</td><td>$row->total</td></tr>";
-            $total=$total+$row->total;
+            if($row->tarjeta=='SI')
+                $totaltarjeta=$totaltarjeta+$row->total;
+            else
+                $total=$total+$row->total;
         }
         $cadena.="</tbody></table></center>";
 
         $total=number_format($total,2);
+        $totaltarjeta=number_format($totaltarjeta,2);
         $d = explode('.',$total);
         $entero=$d[0];
         $decimal=$d[1];
         $cadena.="<hr>";
+        $cadena.="<br><div class='textor'>VIP: $totaltarjeta Bs.</div>";
         $cadena.="<br><div class='textor'>TOTAL: $total Bs.</div><br>";
         //return $cadena.'   ----   -----  '.$total;
         $formatter = new NumeroALetras();
@@ -563,14 +573,14 @@ class SaleController extends Controller
         $empresa= Empresa::find(1);
         $usuario=User::find($id);
         $detalle=DB::table('details')
-        ->select('product_id','nombreproducto', DB::raw('SUM(cantidad) as cant'),'precio',DB::raw('SUM(subtotal) as total'))
+        ->select('product_id','nombreproducto','details.tarjeta', DB::raw('SUM(cantidad) as cant'),'precio',DB::raw('SUM(subtotal) as total'))
         ->join('sales','sales.id','=','details.sale_id')
         ->where('sales.user_id',$id)
         ->where('sales.fecha',$fecha)
         ->where('sales.estado','ACTIVO')
         ->where('sales.tipo','R')
 
-        ->groupBy('product_id','nombreproducto','precio')
+        ->groupBy('product_id','nombreproducto','precio','details.tarjeta')
         ->get();
         $cadena="<style>
         .margen{padding: 0px 15px 0px 15px;}
@@ -601,19 +611,25 @@ class SaleController extends Controller
                 <th>DESCRIPCION</th> <th>CANTIDAD</th><th>P.U.</th><th>TOTAL</th></tr>
                 </thead><tbody>";
         $total=0;
+        $totaltarjeta=0;
 
         foreach ($detalle as $row){
 
             $cadena.="<tr><td>$row->nombreproducto</td><td>$row->cant</td><td>$row->precio</td><td>$row->total</td></tr>";
-            $total=$total+$row->total;
+            if($row->tarjeta=="SI")
+                $totaltarjeta=$totaltarjeta+$row->total;
+            else
+                $total=$total+$row->total;
         }
         $cadena.="</tbody></table></center>";
 
+        $totaltarjeta=number_format($totaltarjeta,2);
         $total=number_format($total,2);
         $d = explode('.',$total);
         $entero=$d[0];
         $decimal=$d[1];
         $cadena.="<hr>";
+        $cadena.="<br><div class='textor'>VIP: $totaltarjeta Bs.</div>";
         $cadena.="<br><div class='textor'>TOTAL: $total Bs.</div><br>";
         $formatter = new NumeroALetras();
         $entero=str_replace(',','',$entero);
@@ -629,14 +645,14 @@ class SaleController extends Controller
         $empresa= Empresa::find(1);
         $usuario=User::find($id);
         $detalle=DB::table('details')
-        ->select('product_id','nombreproducto', DB::raw('SUM(cantidad) as cant'),'precio',DB::raw('SUM(subtotal) as total'))
+        ->select('product_id','nombreproducto','details.tarjeta', DB::raw('SUM(cantidad) as cant'),'precio',DB::raw('SUM(subtotal) as total'))
         ->join('sales','sales.id','=','details.sale_id')
         ->where('sales.user_id',$id)
         ->where('sales.fecha',$fecha)
         ->where('sales.estado','ACTIVO')
         ->where('sales.tipo','F')
 
-        ->groupBy('product_id','nombreproducto','precio')
+        ->groupBy('product_id','nombreproducto','precio','details.tarjeta')
         ->get();
         $cadena="<style>
         .margen{padding: 0px 15px 0px 15px;}
@@ -667,19 +683,25 @@ class SaleController extends Controller
                 <th>DESCRIPCION</th> <th>CANTIDAD</th><th>P.U.</th><th>TOTAL</th></tr>
                 </thead><tbody>";
         $total=0;
+        $totaltarjeta=0;
 
         foreach ($detalle as $row){
 
             $cadena.="<tr><td>$row->nombreproducto</td><td>$row->cant</td><td>$row->precio</td><td>$row->total</td></tr>";
-            $total=$total+$row->total;
+            if($row->tarjeta=='SI')
+                $totaltarjeta=$totaltarjeta+$row->total;
+            else                
+                $total=$total+$row->total;
         }
         $cadena.="</tbody></table></center>";
 
         $total=number_format($total,2);
+        $totaltarjeta=number_format($totaltarjeta,2);
         $d = explode('.',$total);
         $entero=$d[0];
         $decimal=$d[1];
         $cadena.="<hr>";
+        $cadena.="<br><div class='textor'>VIP: $totaltarjeta Bs.</div>";
         $cadena.="<br><div class='textor'>TOTAL: $total Bs.</div><br>";
         $formatter = new NumeroALetras();
         $entero=str_replace(',','',$entero);
@@ -695,13 +717,13 @@ class SaleController extends Controller
         $empresa= Empresa::find(1);
         $usuario=User::find($id);
         $detalle=DB::table('details')
-        ->select('product_id','nombreproducto', DB::raw('SUM(cantidad) as cant'),'precio',DB::raw('SUM(subtotal) as total'))
+        ->select('product_id','nombreproducto','details.tarjeta', DB::raw('SUM(cantidad) as cant'),'precio',DB::raw('SUM(subtotal) as total'))
         ->join('sales','sales.id','=','details.sale_id')
         ->where('sales.user_id',$id)
         ->where('sales.fecha',$fecha)
         ->where('sales.estado','ACTIVO')
         ->where('sales.delivery','<>','')
-        ->groupBy('product_id','nombreproducto','precio')
+        ->groupBy('product_id','nombreproducto','precio','details.tarjeta')
         ->get();
         $cadena="<style>
         .margen{padding: 0px 15px 0px 15px;}
@@ -732,19 +754,25 @@ class SaleController extends Controller
                 <th>DESCRIPCION</th> <th>CANTIDAD</th><th>P.U.</th><th>TOTAL</th></tr>
                 </thead><tbody>";
         $total=0;
+        $totaltarjeta=0;
 
         foreach ($detalle as $row){
 
             $cadena.="<tr><td>$row->nombreproducto</td><td>$row->cant</td><td>$row->precio</td><td>$row->total</td></tr>";
-            $total=$total+$row->total;
+            if($row->tarjeta=="SI")
+                $totaltarjeta=$totaltarjeta+$row->total;
+            else
+                $total=$total+$row->total;
         }
         $cadena.="</tbody></table></center>";
 
+        $totaltarjeta=number_format($totaltarjeta,2);
         $total=number_format($total,2);
         $d = explode('.',$total);
         $entero=$d[0];
         $decimal=$d[1];
         $cadena.="<hr>";
+        $cadena.="<br><div class='textor'>VIP: $totaltarjeta Bs.</div>";
         $cadena.="<br><div class='textor'>TOTAL: $total Bs.</div><br>";
         $formatter = new NumeroALetras();
         $entero=str_replace(',','',$entero);
