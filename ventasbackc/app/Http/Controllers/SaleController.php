@@ -40,7 +40,7 @@ class SaleController extends Controller
      */
     public function store(Request $request)
     {
-//        return Empresa::all();
+//        return $request;
 //        exit;
 
         require('codigocontrol/CodigoControlV7.php');

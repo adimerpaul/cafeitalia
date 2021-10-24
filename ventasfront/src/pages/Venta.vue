@@ -65,7 +65,7 @@
       <div class="col-12 col-md-4">
         <q-card>
           <q-card-section class="bg-accent text-white q-pa-xs">
-            <q-icon name="point_of_sale"></q-icon> Venta <q-btn @click="reset"  color="negative" size="xs" icon="restart_alt" label="cancelar"/><q-btn @click="icon = true;"  color="positive" label="Venta" size="xs" icon="add_circle"/>
+            <q-icon name="point_of_sale"></q-icon> Venta <q-btn @click="reset"  color="negative" size="xs" icon="restart_alt" label="cancelar"/><q-btn @click="icon = true;tienerebaja=false;"  color="positive" label="Venta" size="xs" icon="add_circle"/>
           </q-card-section>
           <q-card-section class="q-pa-xs">
             <table style="width: 100%;border: 1px solid black" >
@@ -183,6 +183,7 @@
                       </div>
                     </div>
                     <div>
+                      {{ tienerebaja }}
                       <q-btn  label=" venta" icon="send" type="submit" color="positive" :disable="btn"/>
                       <q-btn label="Cerrar" type="button" size="md" icon="delete" color="negative" class="q-ml-sm" @click="icon=false" />
                     </div>
@@ -454,6 +455,7 @@ export default {
         tarjeta:tj
       }).then(res=>{
         this.booltargeta=false
+        this.tienerebaja=false
         this.codigo=''
         this.btn=false
         this.icon=false
