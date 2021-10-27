@@ -147,7 +147,6 @@ export default {
             let myWindowr = window.open("", "Imprimir", "width=200,height=100");
             myWindowr.document.write(res.data);
             myWindowr.document.close();
-            myWindowr.focus();
             setTimeout(function(){
               myWindowr.print();
               myWindowr.close();
@@ -160,7 +159,6 @@ export default {
             let myWindowc = window.open("", "Imprimir", "width=200,height=100");
             myWindowc.document.write(res.data);
             myWindowc.document.close();
-            myWindowc.focus();
             setTimeout(function(){
               myWindowc.print();
               myWindowc.close();
@@ -173,7 +171,6 @@ export default {
             let myWindowf = window.open("", "Imprimir", "width=200,height=100");
             myWindowf.document.write(res.data);
             myWindowf.document.close();
-            myWindowf.focus();
             setTimeout(function(){
               myWindowf.print();
               myWindowf.close();
