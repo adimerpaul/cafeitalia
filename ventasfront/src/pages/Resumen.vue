@@ -152,8 +152,7 @@ export default {
               myWindowr.close();
               // impDetalle(response);
               //    impAniv(response);
-            },500);
-        });
+
 
             this.$axios.post(process.env.URL+'/imprimirresumenrec/',this.dato1).then(res=>{
             let myWindowc = window.open("", "Imprimir", "width=200,height=100");
@@ -164,8 +163,7 @@ export default {
               myWindowc.close();
               // impDetalle(response);
               //    impAniv(response);
-            },500);
-        });
+  
             
             this.$axios.post(process.env.URL+'/imprimirresumenfac/',this.dato1).then(res=>{
             let myWindowf = window.open("", "Imprimir", "width=200,height=100");
@@ -191,7 +189,10 @@ export default {
             //     },500);
             // });
 
-
+            },500);
+        });     
+               },500);
+        });
 
 
         });
