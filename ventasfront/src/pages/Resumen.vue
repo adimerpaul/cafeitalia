@@ -142,32 +142,40 @@ export default {
         console.log(this.filas);
     },
     imprimir(){
-
+          let mc=this
             this.$axios.post(process.env.URL+'/imprimirresumen/',this.dato1).then(res=>{
             let myWindowr = window.open("", "Imprimir", "width=200,height=100");
             myWindowr.document.write(res.data);
+            myWindowr.focus();
             myWindowr.document.close();
             setTimeout(function(){
               myWindowr.print();
               myWindowr.close();
               // impDetalle(response);
               //    impAniv(response);
+              mc.imprec();
+              mc.imprfac();
 
-
+               },500);
+            })},
+        imprec(){
             this.$axios.post(process.env.URL+'/imprimirresumenrec/',this.dato1).then(res=>{
             let myWindowc = window.open("", "Imprimir", "width=200,height=100");
             myWindowc.document.write(res.data);
+            myWindowc.focus();
             myWindowc.document.close();
             setTimeout(function(){
               myWindowc.print();
               myWindowc.close();
               // impDetalle(response);
               //    impAniv(response);
-  
-            
+               },500);
+            })},
+          impfac(){
             this.$axios.post(process.env.URL+'/imprimirresumenfac/',this.dato1).then(res=>{
             let myWindowf = window.open("", "Imprimir", "width=200,height=100");
             myWindowf.document.write(res.data);
+            myWindowf.focus();
             myWindowf.document.close();
             setTimeout(function(){
               myWindowf.print();
@@ -188,11 +196,6 @@ export default {
             //       //    impAniv(response);
             //     },500);
             // });
-
-            },500);
-        });     
-               },500);
-        });
 
 
         });
