@@ -173,8 +173,8 @@ export default {
             myWindowf.document.close();
             myWindowf.focus();
             setTimeout(function(){
-              myWindow.print();
-              myWindow.close();
+              myWindowf.print();
+              myWindowf.close();
               // impDetalle(response);
               //    impAniv(response);
             },500);
