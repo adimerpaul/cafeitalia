@@ -154,11 +154,11 @@ export default {
               // impDetalle(response);
               //    impAniv(response);
               mc.imprec();
-              mc.imprfac();
 
                },500);
             })},
         imprec(){
+          let mc=this
             this.$axios.post(process.env.URL+'/imprimirresumenrec/',this.dato1).then(res=>{
             let myWindowc = window.open("", "Imprimir", "width=200,height=100");
             myWindowc.document.write(res.data);
@@ -169,6 +169,8 @@ export default {
               myWindowc.close();
               // impDetalle(response);
               //    impAniv(response);
+              mc.impfac();
+
                },500);
             })},
           impfac(){
