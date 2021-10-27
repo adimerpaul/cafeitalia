@@ -144,33 +144,34 @@ export default {
     imprimir(){
 
             this.$axios.post(process.env.URL+'/imprimirresumen/',this.dato1).then(res=>{
-            let myWindow = window.open("", "Imprimir", "width=200,height=100");
-            myWindow.document.write(res.data);
-            myWindow.document.close();
-            myWindow.focus();
+            let myWindowr = window.open("", "Imprimir", "width=200,height=100");
+            myWindowr.document.write(res.data);
+            myWindowr.document.close();
+            myWindowr.focus();
             setTimeout(function(){
-              myWindow.print();
-              myWindow.close();
+              myWindowr.print();
+              myWindowr.close();
               // impDetalle(response);
               //    impAniv(response);
             },500);
 
             this.$axios.post(process.env.URL+'/imprimirresumenrec/',this.dato1).then(res=>{
-            let myWindow = window.open("", "Imprimir", "width=200,height=100");
-            myWindow.document.write(res.data);
-            myWindow.document.close();
-            myWindow.focus();
+            let myWindowc = window.open("", "Imprimir", "width=200,height=100");
+            myWindowc.document.write(res.data);
+            myWindowc.document.close();
+            myWindowc.focus();
             setTimeout(function(){
-              myWindow.print();
-              myWindow.close();
+              myWindowc.print();
+              myWindowc.close();
               // impDetalle(response);
               //    impAniv(response);
             },500);
+            
             this.$axios.post(process.env.URL+'/imprimirresumenfac/',this.dato1).then(res=>{
-            let myWindow = window.open("", "Imprimir", "width=200,height=100");
-            myWindow.document.write(res.data);
-            myWindow.document.close();
-            myWindow.focus();
+            let myWindowf = window.open("", "Imprimir", "width=200,height=100");
+            myWindowf.document.write(res.data);
+            myWindowf.document.close();
+            myWindowf.focus();
             setTimeout(function(){
               myWindow.print();
               myWindow.close();
