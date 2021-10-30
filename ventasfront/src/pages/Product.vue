@@ -37,7 +37,7 @@
               type="number"
               hint="Ingresar precio"
               lazy-rules
-              :rules="[ val => val>0 && val < 500 || 'Por favor Valor']"
+              :rules="[ val => val>0 && val < 5000 || 'Por favor Valor']"
             />
             <q-select
               v-model="dato.rubro_id"
@@ -182,7 +182,7 @@
               type="number"
               hint="Ingresar precio"
               lazy-rules
-              :rules="[ val => val>0 && val < 500 || 'Por favor Valor']"
+              :rules="[ val => val>0 && val < 5000 || 'Por favor Valor']"
             />
             <q-input
               filled
@@ -191,7 +191,7 @@
               type="number"
               hint="Cantidad de platos"
               lazy-rules
-              :rules="[ val => val>0 && val < 500 || 'Por favor Valor']"
+              :rules="[ val => val>0 && val < 5000 || 'Por favor Valor']"
             />
             <q-select
               v-model="dato2.rubro_id"
@@ -296,7 +296,7 @@
               label="Cantidad a agregar"
               type="number"
               lazy-rules
-              :rules="[ val => val>0 && val < 500 || 'Por favor Valor']"
+              :rules="[ val => val>0 && val < 5000 || 'Por favor Valor']"
             />
 
              <div>
@@ -332,7 +332,7 @@
               label="Cantidad a Retirar"
               type="number"
               lazy-rules
-              :rules="[ val => val>0 && val < 500 || 'Por favor Valor']"
+              :rules="[ val => val>0 && val < 5000 || 'Por favor Valor']"
             />
 
              <div>
