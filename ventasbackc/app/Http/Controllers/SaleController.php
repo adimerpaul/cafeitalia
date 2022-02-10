@@ -570,6 +570,8 @@ class SaleController extends Controller
             else
                 $totalefectivo=$row->total;
         }
+        $totalcredito=number_format($totalcredito,2);
+        $totalefectivo=number_format($totalefectivo,2);
         $total=number_format($total,2);
         $totaltarjeta=number_format($totaltarjeta,2);
         $d = explode('.',$total);
