@@ -4,16 +4,27 @@
        @submit.Enter.prevent="buscar"
       >
       <div class="row">
-          <div style="width:40%">
+          <div style="width:30%">
       <q-input
       type='date'
       v-model="dato1.fecha"
-      label="Fecha"
+      label="Fecha 1"
        lazy-rules
               :rules="[ val => val && val.length > 0 || 'Por favor ingresa la fecha']"
       />
+
       </div>
-              <div style="width:40%">
+                <div style="width:30%">
+      <q-input
+      type='date'
+      v-model="dato1.fecha2"
+      label="Fecha 2"
+       lazy-rules
+              :rules="[ val => val && val.length > 0 || 'Por favor ingresa la fecha']"
+      />
+
+      </div>
+              <div style="width:30%">
     <q-select
       v-model="sel"
       label="Usuario"
@@ -106,6 +117,7 @@ export default {
     },
     created() {
       this.dato1.fecha=date.formatDate(Date(),'YYYY-MM-DD');
+      this.dato1.fecha2=date.formatDate(Date(),'YYYY-MM-DD');
 
             this.luser=[];
             this.$axios.post(process.env.URL+'/lusuario').then(res=>{
