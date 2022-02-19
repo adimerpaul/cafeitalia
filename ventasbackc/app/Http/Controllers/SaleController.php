@@ -891,12 +891,12 @@ class SaleController extends Controller
         $detalle2=DB::table('details')
         ->select('details.credito',DB::raw('SUM(subtotal) as total'))
         ->join('sales','sales.id','=','details.sale_id')
-        ->whereDate('sales.fecha','>=',$fecha1)->whereDate('sales.fecha','<=',$fecha2)
-        
+        ->whereDate('sales.fecha','>=',$fecha1)->whereDate('sales.fecha','<=',$fecha2)        
         ->where('sales.estado','ACTIVO')
         ->where('sales.tarjeta','NO')
         ->groupBy('details.credito')
         ->get();
+
         $cadena="<style>
         .margen{padding: 0px 15px 0px 15px;}
         .textoimp{ font-size: small; text-align: center;}
@@ -980,6 +980,17 @@ class SaleController extends Controller
 
         ->groupBy('product_id','nombreproducto','precio','details.tarjeta')
         ->get();
+
+        $detalle2=DB::table('details')
+        ->select('details.credito',DB::raw('SUM(subtotal) as total'))
+        ->join('sales','sales.id','=','details.sale_id')
+        ->whereDate('sales.fecha','>=',$fecha1)->whereDate('sales.fecha','<=',$fecha2)        
+        ->where('sales.estado','ACTIVO')
+        ->where('sales.tipo','R')
+        ->where('sales.tarjeta','NO')
+        ->groupBy('details.credito')
+        ->get();
+
         $cadena="<style>
         .margen{padding: 0px 15px 0px 15px;}
         .textoimp{ font-size: small; text-align: center;}
@@ -1010,6 +1021,8 @@ class SaleController extends Controller
                 </thead><tbody>";
         $total=0;
         $totaltarjeta=0;
+        $totalefectivo=0;
+        $totalcredito=0;
 
         foreach ($detalle as $row){
 
@@ -1020,7 +1033,14 @@ class SaleController extends Controller
                 $total=$total+$row->total;
         }
         $cadena.="</tbody></table></center>";
-
+        foreach ($detalle2 as $row){
+            if($row->credito=='SI')
+                $totalcredito=$row->total;
+            else
+                $totalefectivo=$row->total;
+        }
+        $totalcredito=number_format($totalcredito,2);
+        $totalefectivo=number_format($totalefectivo,2);
         $totaltarjeta=number_format($totaltarjeta,2);
         $total=number_format($total,2);
         $d = explode('.',$total);
@@ -1028,7 +1048,9 @@ class SaleController extends Controller
         $decimal=$d[1];
         $cadena.="<hr>";
         $cadena.="<br><div class='textor'>VIP: $totaltarjeta Bs.</div>";
-        $cadena.="<br><div class='textor'>TOTAL: $total Bs.</div><br>";
+        $cadena.="<br><div class='textor'>TOTAL: $total Bs.</div>";
+        $cadena.="<br><div class='textor'>EFECTIVO: $totalefectivo Bs.</div>";
+        $cadena.="<br><div class='textor'>TCREDITO: $totalcredito Bs.</div>";
         $formatter = new NumeroALetras();
         $entero=str_replace(',','',$entero);
         $cadena.="  SON: ".$formatter->toWords($entero)." $decimal/100 Bolivianos<br>";
@@ -1051,6 +1073,17 @@ class SaleController extends Controller
 
         ->groupBy('product_id','nombreproducto','precio','details.tarjeta')
         ->get();
+
+        $detalle2=DB::table('details')
+        ->select('details.credito',DB::raw('SUM(subtotal) as total'))
+        ->join('sales','sales.id','=','details.sale_id')
+        ->whereDate('sales.fecha','>=',$fecha1)->whereDate('sales.fecha','<=',$fecha2)        
+        ->where('sales.estado','ACTIVO')
+        ->where('sales.tipo','F')
+        ->where('sales.tarjeta','NO')
+        ->groupBy('details.credito')
+        ->get();
+
         $cadena="<style>
         .margen{padding: 0px 15px 0px 15px;}
         .textoimp{ font-size: small; text-align: center;}
@@ -1081,6 +1114,8 @@ class SaleController extends Controller
                 </thead><tbody>";
         $total=0;
         $totaltarjeta=0;
+        $totalcredito=0;
+        $totalefectivo=0;
 
         foreach ($detalle as $row){
 
@@ -1091,7 +1126,14 @@ class SaleController extends Controller
                 $total=$total+$row->total;
         }
         $cadena.="</tbody></table></center>";
-
+        foreach ($detalle2 as $row){
+            if($row->credito=='SI')
+                $totalcredito=$row->total;
+            else
+                $totalefectivo=$row->total;
+        }
+        $totalcredito=number_format($totalcredito,2);
+        $totalefectivo=number_format($totalefectivo,2);
         $total=number_format($total,2);
         $totaltarjeta=number_format($totaltarjeta,2);
         $d = explode('.',$total);
@@ -1099,7 +1141,9 @@ class SaleController extends Controller
         $decimal=$d[1];
         $cadena.="<hr>";
         $cadena.="<br><div class='textor'>VIP: $totaltarjeta Bs.</div>";
-        $cadena.="<br><div class='textor'>TOTAL: $total Bs.</div><br>";
+        $cadena.="<br><div class='textor'>TOTAL: $total Bs.</div>";
+        $cadena.="<br><div class='textor'>EFECTIVO: $totalefectivo Bs.</div>";
+        $cadena.="<br><div class='textor'>TCREDITO: $totalcredito Bs.</div>";
         $formatter = new NumeroALetras();
         $entero=str_replace(',','',$entero);
         $cadena.="  SON: ".$formatter->toWords($entero)." $decimal/100 Bolivianos<br>";
