@@ -39,8 +39,14 @@
     <q-btn
     v-if="this.total1>0 && this.total2>0"
     color="warning"
-    label="IMPRIMIR"
+    label="IMPRIMIR USER"
     @click="imprimir"
+    />
+        <q-btn
+    v-if="this.total1>0 && this.total2>0"
+    color="warning"
+    label="IMPRIMIR TODOS"
+    @click="imprimir2"
     />
     <q-table
       title="Ventas"
@@ -153,6 +159,7 @@ export default {
 
         console.log(this.filas);
     },
+
     imprimir(){
           let mc=this
             this.$axios.post(process.env.URL+'/imprimirresumen/',this.dato1).then(res=>{
@@ -216,6 +223,57 @@ export default {
 
 
     },
+    
+    imprimir2(){
+          let mc=this
+            this.$axios.post(process.env.URL+'/todoimprimirresumen/',this.dato1).then(res=>{
+            let myWindowr = window.open("", "Imprimir", "width=200,height=100");
+            myWindowr.document.write(res.data);
+            myWindowr.focus();
+            myWindowr.document.close();
+            setTimeout(function(){
+              myWindowr.print();
+              myWindowr.close();
+              // impDetalle(response);
+              //    impAniv(response);
+              mc.imprectodos();
+
+               },500);
+            })},
+        imprectodos(){
+          let mc=this
+            this.$axios.post(process.env.URL+'/todoimprimirresumenrec/',this.dato1).then(res=>{
+            let myWindowc = window.open("", "Imprimir", "width=200,height=100");
+            myWindowc.document.write(res.data);
+            myWindowc.focus();
+            myWindowc.document.close();
+            setTimeout(function(){
+              myWindowc.print();
+              myWindowc.close();
+              // impDetalle(response);
+              //    impAniv(response);
+              mc.impfactodos();
+
+               },500);
+            })},
+          impfactodos(){
+            this.$axios.post(process.env.URL+'/todoimprimirresumenfac/',this.dato1).then(res=>{
+            let myWindowf = window.open("", "Imprimir", "width=200,height=100");
+            myWindowf.document.write(res.data);
+            myWindowf.focus();
+            myWindowf.document.close();
+            setTimeout(function(){
+              myWindowf.print();
+              myWindowf.close();
+            },500);
+
+
+
+        });
+
+
+
+    }
     }
 
 }
