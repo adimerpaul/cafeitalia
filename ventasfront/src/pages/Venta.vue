@@ -297,7 +297,7 @@ export default {
                 r.subtotal=(0.8*r.subtotal).toFixed(2)
               })
               this.tienerebaja=true
-              if ( parseFloat(this.total) < parseFloat(this.nombresaldo.saldo)){
+              if ( parseFloat(this.total) <= parseFloat(this.nombresaldo.saldo)){
                 this.btn=false
               }else {
                 this.btn=true
