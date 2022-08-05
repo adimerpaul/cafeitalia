@@ -35,6 +35,7 @@
               v-model="dato.precio"
               label="Precio"
               type="number"
+              step="0.01"
               hint="Ingresar precio"
               lazy-rules
               :rules="[ val => val>0 && val < 5000 || 'Por favor Valor']"
@@ -50,7 +51,7 @@
               filled
               v-model="dato.color"
               class="my-input"
-              lazy-rules
+              lazy-rules              
               :rules="[ val => val && val.length > 0 || 'Por favor ingresa datos']"
             >
               <template v-slot:append>
@@ -180,6 +181,7 @@
               v-model="dato2.precio"
               label="Precio"
               type="number"
+              step="0.01"
               hint="Ingresar precio"
               lazy-rules
               :rules="[ val => val>0 && val < 5000 || 'Por favor Valor']"
