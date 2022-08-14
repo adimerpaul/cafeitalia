@@ -103,6 +103,7 @@
             </table>
           </q-card-section>
         </q-card>
+        
         <q-dialog v-model="icon">
           <q-card style="width: 700px; max-width: 80vw;">
             <q-card-section class="row items-center q-pa-xs bg-green-14 text-white">
@@ -398,7 +399,7 @@ export default {
         setTimeout(function(){
           myWindow.print();
           myWindow.close();
-          mc.comanda2(sale_id);
+         //  mc.comanda2(sale_id);
           //    impAniv(response);
         },500);
       })
