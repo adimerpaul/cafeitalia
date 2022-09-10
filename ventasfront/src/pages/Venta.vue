@@ -103,7 +103,7 @@
             </table>
           </q-card-section>
         </q-card>
-        
+
         <q-dialog v-model="icon">
           <q-card style="width: 700px; max-width: 80vw;">
             <q-card-section class="row items-center q-pa-xs bg-green-14 text-white">
@@ -185,7 +185,7 @@
                     </div>
                     <div>
                       {{ tienerebaja }}
-                      <q-btn  label=" venta" icon="send" type="submit" color="positive" :disable="btn"/>
+                      <q-btn  label=" venta" icon="send" type="submit" color="positive" :disable="btn" :loading="loading"/>
                       <q-btn label="Cerrar" type="button" size="md" icon="delete" color="negative" class="q-ml-sm" @click="icon=false" />
                     </div>
                   </q-form>
@@ -220,6 +220,7 @@ export default {
   name: "Venta",
   data(){
     return {
+      loading:false,
       btn:false,
       tienerebaja:false,
       tcredito:'',
@@ -419,6 +420,7 @@ export default {
       })
     },
     onsubmit(){
+      this.loading=true
       this.btn=true;
       // console.log('a');
       this.$q.loading.show()
@@ -432,6 +434,7 @@ export default {
         })
         this.$q.loading.hide()
         this.btn=false
+        this.loading=false
         return false;
       }
       if (this.total=='' || this.total==null|| parseFloat(this.total)==0){
@@ -443,6 +446,7 @@ export default {
         })
         this.$q.loading.hide()
         this.btn=false
+        this.loading=false
         return false;
       }
       let tj='';
@@ -466,6 +470,7 @@ export default {
         this.boolcredito=false
         this.codigo=''
         this.btn=false
+        this.loading=false
         this.icon=false
         this.$store.state.products=[]
         console.log(res.data);
@@ -541,6 +546,7 @@ export default {
         // }
       }).catch(err=>{
         this.btn=false
+        this.loading=false
         this.$q.loading.hide()
         //   this.alert=false;
         this.$q.notify({
